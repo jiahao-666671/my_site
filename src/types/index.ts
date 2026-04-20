@@ -5,6 +5,13 @@ export interface User {
   name: string;
   role: 'student' | 'teacher';
   created_at: string;
+  bio?: string;
+  avatar?: string;
+  social?: {
+    github?: string;
+    linkedin?: string;
+    portfolio?: string;
+  };
 }
 
 // 课程类型

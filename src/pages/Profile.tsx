@@ -220,7 +220,7 @@ const Profile: React.FC = () => {
               </div>
               <div className="md:w-1/3 flex justify-center">
                 <div className="w-36 h-36 md:w-48 md:h-48 bg-white rounded-full border-4 border-blue-200 shadow-xl flex items-center justify-center">
-                  {displayUser.avatar ? (
+                  {displayUser?.avatar ? (
                     <img 
                       src={displayUser.avatar} 
                       alt={displayUser.name} 
@@ -276,13 +276,13 @@ const Profile: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-700 mb-2">个人简介</h3>
-                    <p className="text-gray-600">{displayUser.bio}</p>
+                    <p className="text-gray-600">{displayUser?.bio || ''}</p>
                   </div>
-                  {displayUser.social && (
+                  {displayUser?.social && (
                     <div>
                       <h3 className="text-lg font-semibold text-gray-700 mb-2">社交链接</h3>
                       <div className="flex space-x-4">
-                        {displayUser.social.github && (
+                        {displayUser?.social?.github && (
                           <a href={displayUser.social.github} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                             <span className="flex items-center space-x-1">
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -292,7 +292,7 @@ const Profile: React.FC = () => {
                             </span>
                           </a>
                         )}
-                        {displayUser.social.linkedin && (
+                        {displayUser?.social?.linkedin && (
                           <a href={displayUser.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                             <span className="flex items-center space-x-1">
                               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -302,7 +302,7 @@ const Profile: React.FC = () => {
                             </span>
                           </a>
                         )}
-                        {displayUser.social.portfolio && (
+                        {displayUser?.social?.portfolio && (
                           <a href={displayUser.social.portfolio} target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-900 transition-colors">
                             <span className="flex items-center space-x-1">
                               <Bookmark className="h-4 w-4" />
