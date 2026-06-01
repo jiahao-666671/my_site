@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吕仲豪 · Python数据分析项目设计</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        dark: '#1f2937',
+                        light: '#f3f4f6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-dark">
+    <!-- 导航栏 -->
+    <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-gray-200 sticky top-0 bg-white z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <a href="portfolio.html" class="text-2xl font-bold text-dark">
+                <span class="text-primary">吕仲豪</span> · 项目设计
+            </a>
+            <nav class="hidden md:flex space-x-8">
+                <a href="portfolio.html" class="text-gray-600 hover:text-primary transition-colors">主页</a>
+                <a href="projects.html" class="text-primary font-medium">项目展示</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- 标题 -->
+        <section class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">完整项目展示</h2>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                6个完整的Python实战项目，从数据清洗到模型部署，覆盖数据分析全流程
+            </p>
+        </section>
+
+        <!-- 项目详情区域 -->
+        <section class="space-y-16">
+            <!-- 项目 1 -->
+            <div id="project-1" class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-bar-chart text-blue-600 text-2xl"></i>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">数据处理</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">电商用户行为数据清洗与可视化</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            使用Pandas进行数据清洗，处理缺失值、重复值和异常值；使用Matplotlib和Seaborn绘制用户行为占比图、日活趋势图、时段热力图，并统计转化率。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Pandas</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Matplotlib</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Seaborn</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">数据清洗</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="projects/ecommerce_analysis/main.py" class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                                <i class="fa fa-code mr-2"></i>查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg">
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-picture-o text-5xl mb-4 text-gray-300"></i>
+                            <p>项目可视化预览</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目 2 -->
+            <div id="project-2" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-brain text-green-600 text-2xl"></i>
+                            </div>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">NLP</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">影评情感分析NLP项目</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            基于IMDB风格影评数据，进行文本预处理（分词、去停用词），使用TF-IDF向量化，逻辑回归建模，输出评估指标，支持自定义文本预测。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Scikit-learn</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">TF-IDF</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">逻辑回归</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">情感分析</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="projects/sentiment_analysis/main.py" class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                                <i class="fa fa-code mr-2"></i>查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg">
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-comment text-5xl mb-4 text-gray-300"></i>
+                            <p>项目可视化预览</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目 3 -->
+            <div id="project-3" class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-line-chart text-yellow-600 text-2xl"></i>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">时间序列</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">共享单车订单时间序列预测</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            使用ARIMA模型进行时间序列预测，包括数据预处理、趋势图绘制、模型训练与预测，输出MAE、RMSE评估指标。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">ARIMA</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">时间序列</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">预测</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Statsmodels</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="projects/time_series_prediction/main.py" class="bg-yellow-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-yellow-700 transition-colors">
+                                <i class="fa fa-code mr-2"></i>查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg">
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-area-chart text-5xl mb-4 text-gray-300"></i>
+                            <p>项目可视化预览</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目 4 -->
+            <div id="project-4" class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-database text-purple-600 text-2xl"></i>
+                            </div>
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">仪表板</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Streamlit+SQLite销售数据仪表板</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            创建SQLite数据库与数据表，支持多维度筛选，实时展示可视化图表，支持导出Excel功能。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Streamlit</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">SQLite</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Plotly</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">数据可视化</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="projects/sales_dashboard/app.py" class="bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors">
+                                <i class="fa fa-code mr-2"></i>查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg">
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-tachometer text-5xl mb-4 text-gray-300"></i>
+                            <p>项目可视化预览</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目 5 -->
+            <div id="project-5" class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-robot text-pink-600 text-2xl"></i>
+                            </div>
+                            <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">LLM应用</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">LangChain本地知识库问答机器人</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            读取本地Markdown文档，文本分块向量化，使用Chroma向量库存储，构建问答链，提供Streamlit简易交互界面。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">LangChain</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Chroma</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">向量检索</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">RAG</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="projects/qa_bot/app.py" class="bg-pink-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-pink-700 transition-colors">
+                                <i class="fa fa-code mr-2"></i>查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg">
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-comments text-5xl mb-4 text-gray-300"></i>
+                            <p>项目可视化预览</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目 6 -->
+            <div id="project-6" class="bg-gradient-to-br from-cyan-50 to-sky-50 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fa fa-cloud text-cyan-600 text-2xl"></i>
+                            </div>
+                            <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">模型部署</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">图像分类模型部署</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            训练MNIST图像分类模型，使用FastAPI搭建预测接口，编写Dockerfile实现容器化部署，使用Streamlit作为前端调用接口。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">FastAPI</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Docker</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">TensorFlow</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">MLOps</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <a href="projects/image_classification/api.py" class="bg-cyan-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-cyan-700 transition-colors">
+                                <i class="fa fa-code mr-2"></i>查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-lg">
+                        <div class="text-center text-gray-500 py-12">
+                            <i class="fa fa-cubes text-5xl mb-4 text-gray-300"></i>
+                            <p>项目可视化预览</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 技术栈展示 -->
+        <section class="mt-20">
+            <h3 class="text-2xl font-bold mb-8 text-center">技术栈</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-gray-50 rounded-xl p-6 text-center card-hover">
+                    <i class="fa fa-database text-3xl text-blue-600 mb-3"></i>
+                    <p class="font-medium">Pandas</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center card-hover">
+                    <i class="fa fa-line-chart text-3xl text-green-600 mb-3"></i>
+                    <p class="font-medium">Matplotlib</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center card-hover">
+                    <i class="fa fa-bar-chart text-3xl text-yellow-600 mb-3"></i>
+                    <p class="font-medium">Seaborn</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center card-hover">
+                    <i class="fa fa-brain text-3xl text-purple-600 mb-3"></i>
+                    <p class="font-medium">Scikit-learn</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center card-hover">
+                    <i class="fa fa-paint-brush text-3xl text-pink-600 mb-3"></i>
+                    <p class="font-medium">Streamlit</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-6 text-center card-hover">
+                    <i class="fa fa-cubes text-3xl text-cyan-600 mb-3"></i>
+                    <p class="font-medium">Docker</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12 px-4 sm:px-6 lg:px-8 mt-20">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <p class="text-gray-400">© 2024 吕仲豪. 保留所有权利。</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://github.com/jiahao-666671" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
