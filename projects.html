@@ -6,6 +6,7 @@
     <title>吕仲豪 · Python数据分析项目设计</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -13,101 +14,229 @@
                     colors: {
                         primary: '#3b82f6',
                         dark: '#1f2937',
-                        light: '#f3f4f6'
+                        light: '#f3f4f6',
+                        gradientStart: '#667eea',
+                        gradientEnd: '#764ba2'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(102, 126, 234, 0.4)' },
+                            '50%': { boxShadow: '0 0 40px rgba(102, 126, 234, 0.8)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
         .card-hover {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-hover:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-6px);
         }
         .code-editor {
-            font-family: 'Courier New', Courier, monospace;
-            background: #1e1e1e;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
             color: #d4d4d4;
             resize: vertical;
-            border-radius: 8px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.6;
+        }
+        .code-editor:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         .code-output {
-            font-family: 'Courier New', Courier, monospace;
-            background: #f3f4f6;
-            border: 1px solid #d1d5db;
+            font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
             white-space: pre-wrap;
+            border-radius: 12px;
+            line-height: 1.6;
         }
         .practice-section {
-            animation: slideDown 0.3s ease-out;
+            animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-green:hover {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+        }
+        .tag {
+            transition: all 0.3s ease;
+        }
+        .tag:hover {
+            transform: translateY(-2px);
+        }
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .project-card:hover::before {
+            left: 100%;
+        }
+        .glow-effect {
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.15);
         }
     </style>
 </head>
-<body class="bg-white font-sans text-dark">
-    <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-gray-200 sticky top-0 bg-white z-50">
+<body class="bg-gradient-to-br from-slate-50 via-white to-indigo-50 font-inter">
+    <header class="py-6 px-4 sm:px-6 lg:px-8 bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 bg-white z-50 shadow-sm">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="portfolio.html" class="text-2xl font-bold text-dark">
-                <span class="text-primary">吕仲豪</span> · 项目设计
+            <a href="portfolio.html" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                吕仲豪 · 项目设计
             </a>
             <nav class="hidden md:flex space-x-8">
-                <a href="portfolio.html" class="text-gray-600 hover:text-primary transition-colors">主页</a>
-                <a href="projects.html" class="text-primary font-medium">项目展示</a>
+                <a href="portfolio.html" class="text-gray-600 hover:text-indigo-600 transition-all duration-300 font-medium">主页</a>
+                <a href="projects.html" class="text-indigo-600 font-semibold relative">
+                    项目展示
+                    <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full"></span>
+                </a>
             </nav>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <section class="text-center mb-16">
-            <h2 class="text-4xl font-bold mb-4">完整项目展示</h2>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-                6个完整的Python实战项目，从数据清洗到模型部署，覆盖数据分析全流程。点击"练习"按钮开始交互式学习！
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <section class="text-center mb-20">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-6 shadow-lg">
+                <i class="fa fa-code text-white text-2xl"></i>
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-800 mb-6">
+                完整项目展示
+            </h2>
+            <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                6个完整的Python实战项目，从数据清洗到模型部署，覆盖数据分析全流程。
+                <br class="hidden md:block">
+                点击"练习"按钮开始交互式学习！
             </p>
+            <div class="mt-8 flex justify-center gap-4">
+                <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-gray-600">6个项目</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-gray-600">交互式练习</span>
+                </div>
+                <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
+                    <span class="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-gray-600">实时输出</span>
+                </div>
+            </div>
         </section>
 
-        <section class="space-y-16">
-            <div id="project-1" class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-6">
+        <section class="space-y-8">
+            <div id="project-1" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 project-card card-hover glow-effect">
+                <div class="grid md:grid-cols-2 gap-10 items-center mb-8">
                     <div>
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fa fa-bar-chart text-blue-600 text-2xl"></i>
+                        <div class="flex items-center mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fa fa-bar-chart text-white text-2xl"></i>
                             </div>
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">数据处理</span>
+                            <span class="bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold">数据处理</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">电商用户行为数据清洗与可视化</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">电商用户行为数据清洗与可视化</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             使用Pandas进行数据清洗，处理缺失值、重复值和异常值；使用Matplotlib和Seaborn绘制用户行为占比图、日活趋势图、时段热力图，并统计转化率。
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Pandas</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Matplotlib</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Seaborn</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">数据清洗</span>
+                        <div class="flex flex-wrap gap-2.5 mb-6">
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Pandas</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Matplotlib</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Seaborn</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">数据清洗</span>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="showPractice('project1')" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            <button onclick="showPractice('project1')" class="btn-gradient text-white px-7 py-3.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-flask mr-2"></i>开始练习
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-lg">
-                        <div class="text-center text-gray-500 py-12">
-                            <i class="fa fa-picture-o text-5xl mb-4 text-gray-300"></i>
-                            <p>项目可视化预览</p>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 flex items-center justify-center min-h-[200px]">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-xl shadow-md mb-4">
+                                <i class="fa fa-chart-bar text-blue-500 text-3xl"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium">数据可视化预览</p>
                         </div>
                     </div>
                 </div>
                 <div id="practice-project1" class="hidden practice-section">
-                    <div class="bg-white rounded-xl p-6 shadow-lg">
-                        <h4 class="text-xl font-bold mb-4">🎯 练习 1：Pandas基础数据操作</h4>
-                        <p class="text-gray-600 mb-4">创建一个简单的DataFrame，包含产品名称、价格和销量，并计算总销售额。</p>
-                        <textarea id="editor-project1" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># 创建数据
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-8 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 flex items-center">
+                                <span class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa fa-target text-white text-sm"></i>
+                                </span>
+                                练习 1：Pandas基础数据操作
+                            </h4>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">基础</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">创建一个简单的数据表格，包含产品名称、价格和销量，并计算总销售额。</p>
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-t-xl border-b border-gray-700">
+                                <span class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                </span>
+                                <span class="text-gray-400 text-sm font-mono">main.py</span>
+                            </div>
+                            <textarea id="editor-project1" class="code-editor w-full h-56 p-4 rounded-b-xl mb-4 border border-gray-200 focus:border-indigo-400"># 创建数据
 data = {
     '产品': ['手机', '电脑', '平板'],
     '价格': [2999, 5999, 1999],
@@ -128,59 +257,83 @@ for i in range(len(data['产品'])):
 
 print("-" * 35)
 print('总销售额:', total)</textarea>
-                        <div class="flex gap-4">
-                            <button onclick="runCode('project1')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="runCode('project1')" class="btn-green text-white px-5 py-2.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-play mr-2"></i>运行代码
                             </button>
-                            <button onclick="resetCode('project1')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            <button onclick="resetCode('project1')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl font-semibold flex items-center transition-all">
                                 <i class="fa fa-refresh mr-2"></i>重置
                             </button>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">输出：</h5>
-                            <pre id="output-project1" class="code-output p-4 rounded-lg min-h-[100px]"></pre>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h5 class="text-sm font-semibold text-gray-700 flex items-center">
+                                    <i class="fa fa-terminal mr-2 text-gray-500"></i>输出：
+                                </h5>
+                            </div>
+                            <pre id="output-project1" class="code-output p-5 rounded-xl min-h-[150px]"></pre>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="project-2" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-6">
+            <div id="project-2" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 project-card card-hover">
+                <div class="grid md:grid-cols-2 gap-10 items-center mb-8">
                     <div>
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fa fa-brain text-green-600 text-2xl"></i>
+                        <div class="flex items-center mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fa fa-brain text-white text-2xl"></i>
                             </div>
-                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">NLP</span>
+                            <span class="bg-emerald-50 text-emerald-700 px-4 py-1.5 rounded-full text-sm font-semibold">NLP</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">影评情感分析NLP项目</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">影评情感分析NLP项目</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             基于IMDB风格影评数据，进行文本预处理，使用TF-IDF向量化，逻辑回归建模，输出评估指标，支持自定义文本预测。
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Scikit-learn</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">TF-IDF</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">逻辑回归</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">情感分析</span>
+                        <div class="flex flex-wrap gap-2.5 mb-6">
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Scikit-learn</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">TF-IDF</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">逻辑回归</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">情感分析</span>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="showPractice('project2')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            <button onclick="showPractice('project2')" class="btn-gradient text-white px-7 py-3.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-flask mr-2"></i>开始练习
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-lg">
-                        <div class="text-center text-gray-500 py-12">
-                            <i class="fa fa-comment text-5xl mb-4 text-gray-300"></i>
-                            <p>项目可视化预览</p>
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 flex items-center justify-center min-h-[200px]">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-xl shadow-md mb-4">
+                                <i class="fa fa-comment text-emerald-500 text-3xl"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium">NLP分析预览</p>
                         </div>
                     </div>
                 </div>
                 <div id="practice-project2" class="hidden practice-section">
-                    <div class="bg-white rounded-xl p-6 shadow-lg">
-                        <h4 class="text-xl font-bold mb-4">🎯 练习 2：文本预处理与词频统计</h4>
-                        <p class="text-gray-600 mb-4">实现一个简单的文本分词和词频统计功能。</p>
-                        <textarea id="editor-project2" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># 文本预处理与词频统计
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-8 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 flex items-center">
+                                <span class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa fa-target text-white text-sm"></i>
+                                </span>
+                                练习 2：文本预处理与词频统计
+                            </h4>
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">进阶</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">实现一个简单的文本分词和词频统计功能。</p>
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-t-xl border-b border-gray-700">
+                                <span class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                </span>
+                                <span class="text-gray-400 text-sm font-mono">main.py</span>
+                            </div>
+                            <textarea id="editor-project2" class="code-editor w-full h-56 p-4 rounded-b-xl mb-4 border border-gray-200 focus:border-indigo-400"># 文本预处理与词频统计
 text = "这部电影太棒了！演员的表演很精彩，剧情也很吸引人。"
 
 # 简单分词（按字符分割）
@@ -196,59 +349,83 @@ print("原始文本:", text)
 print("\n词频统计:")
 for word, count in sorted(word_count.items(), key=lambda x: x[1], reverse=True)[:10]:
     print(f"{word}: {count}次")</textarea>
-                        <div class="flex gap-4">
-                            <button onclick="runCode('project2')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="runCode('project2')" class="btn-green text-white px-5 py-2.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-play mr-2"></i>运行代码
                             </button>
-                            <button onclick="resetCode('project2')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            <button onclick="resetCode('project2')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl font-semibold flex items-center transition-all">
                                 <i class="fa fa-refresh mr-2"></i>重置
                             </button>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">输出：</h5>
-                            <pre id="output-project2" class="code-output p-4 rounded-lg min-h-[100px]"></pre>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h5 class="text-sm font-semibold text-gray-700 flex items-center">
+                                    <i class="fa fa-terminal mr-2 text-gray-500"></i>输出：
+                                </h5>
+                            </div>
+                            <pre id="output-project2" class="code-output p-5 rounded-xl min-h-[150px]"></pre>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="project-3" class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-6">
+            <div id="project-3" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 project-card card-hover">
+                <div class="grid md:grid-cols-2 gap-10 items-center mb-8">
                     <div>
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fa fa-line-chart text-yellow-600 text-2xl"></i>
+                        <div class="flex items-center mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fa fa-line-chart text-white text-2xl"></i>
                             </div>
-                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">时间序列</span>
+                            <span class="bg-amber-50 text-amber-700 px-4 py-1.5 rounded-full text-sm font-semibold">时间序列</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">共享单车订单时间序列预测</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">共享单车订单时间序列预测</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             使用ARIMA模型进行时间序列预测，包含数据预处理、趋势图绘制、模型训练与预测，输出MAE、RMSE评估指标。
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">ARIMA</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">时间序列</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">预测</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Statsmodels</span>
+                        <div class="flex flex-wrap gap-2.5 mb-6">
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">ARIMA</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">时间序列</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">预测</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Statsmodels</span>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="showPractice('project3')" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            <button onclick="showPractice('project3')" class="btn-gradient text-white px-7 py-3.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-flask mr-2"></i>开始练习
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-lg">
-                        <div class="text-center text-gray-500 py-12">
-                            <i class="fa fa-area-chart text-5xl mb-4 text-gray-300"></i>
-                            <p>项目可视化预览</p>
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 flex items-center justify-center min-h-[200px]">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-xl shadow-md mb-4">
+                                <i class="fa fa-area-chart text-amber-500 text-3xl"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium">时间序列预览</p>
                         </div>
                     </div>
                 </div>
-                <div id="practice-project3" class="hidden practice-section">
-                    <div class="bg-white rounded-xl p-6 shadow-lg">
-                        <h4 class="text-xl font-bold mb-4">🎯 练习 3：简单时间序列分析</h4>
-                        <p class="text-gray-600 mb-4">模拟一周的订单数据，计算均值和趋势。</p>
-                        <textarea id="editor-project3" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># 简单时间序列分析
+                                <div id="practice-project3" class="hidden practice-section">
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-8 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 flex items-center">
+                                <span class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa fa-target text-white text-sm"></i>
+                                </span>
+                                练习 3：简单时间序列分析
+                            </h4>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">高级</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">模拟一周的订单数据，计算均值和趋势。</p>
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-t-xl border-b border-gray-700">
+                                <span class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                </span>
+                                <span class="text-gray-400 text-sm font-mono">main.py</span>
+                            </div>
+                            <textarea id="editor-project3" class="code-editor w-full h-56 p-4 rounded-b-xl mb-4 border border-gray-200 focus:border-indigo-400"># 简单时间序列分析
 import math
 
 # 模拟一周的订单数据
@@ -274,59 +451,83 @@ print(f"\n3日移动平均:")
 for i in range(2, len(orders)):
     ma = sum(orders[i-2:i+1]) / 3
     print(f"{days[i]}: {ma:.1f}")</textarea>
-                        <div class="flex gap-4">
-                            <button onclick="runCode('project3')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="runCode('project3')" class="btn-green text-white px-5 py-2.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-play mr-2"></i>运行代码
                             </button>
-                            <button onclick="resetCode('project3')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            <button onclick="resetCode('project3')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl font-semibold flex items-center transition-all">
                                 <i class="fa fa-refresh mr-2"></i>重置
                             </button>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">输出：</h5>
-                            <pre id="output-project3" class="code-output p-4 rounded-lg min-h-[100px]"></pre>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h5 class="text-sm font-semibold text-gray-700 flex items-center">
+                                    <i class="fa fa-terminal mr-2 text-gray-500"></i>输出：
+                                </h5>
+                            </div>
+                            <pre id="output-project3" class="code-output p-5 rounded-xl min-h-[150px]"></pre>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="project-4" class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-6">
+            <div id="project-4" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 project-card card-hover">
+                <div class="grid md:grid-cols-2 gap-10 items-center mb-8">
                     <div>
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fa fa-database text-purple-600 text-2xl"></i>
+                        <div class="flex items-center mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-violet-500 to-purple-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fa fa-database text-white text-2xl"></i>
                             </div>
-                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">仪表板</span>
+                            <span class="bg-violet-50 text-violet-700 px-4 py-1.5 rounded-full text-sm font-semibold">仪表板</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">Streamlit+SQLite销售数据仪表板</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Streamlit+SQLite销售数据仪表板</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             创建SQLite数据库与数据表，支持多维度筛选，实时展示可视化图表，支持导出Excel功能。
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Streamlit</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">SQLite</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Plotly</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">数据可视化</span>
+                        <div class="flex flex-wrap gap-2.5 mb-6">
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Streamlit</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">SQLite</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Plotly</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">数据可视化</span>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="showPractice('project4')" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            <button onclick="showPractice('project4')" class="btn-gradient text-white px-7 py-3.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-flask mr-2"></i>开始练习
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-lg">
-                        <div class="text-center text-gray-500 py-12">
-                            <i class="fa fa-tachometer text-5xl mb-4 text-gray-300"></i>
-                            <p>项目可视化预览</p>
+                    <div class="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-6 flex items-center justify-center min-h-[200px]">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-xl shadow-md mb-4">
+                                <i class="fa fa-tachometer text-violet-500 text-3xl"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium">仪表板预览</p>
                         </div>
                     </div>
                 </div>
                 <div id="practice-project4" class="hidden practice-section">
-                    <div class="bg-white rounded-xl p-6 shadow-lg">
-                        <h4 class="text-xl font-bold mb-4">🎯 练习 4：SQLite数据库基础操作</h4>
-                        <p class="text-gray-600 mb-4">创建一个简单的销售数据库，插入数据并进行查询。</p>
-                        <textarea id="editor-project4" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># SQLite数据库基础操作
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-8 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 flex items-center">
+                                <span class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa fa-target text-white text-sm"></i>
+                                </span>
+                                练习 4：SQLite数据库基础操作
+                            </h4>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">基础</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">创建一个简单的销售数据库，插入数据并进行查询。</p>
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-t-xl border-b border-gray-700">
+                                <span class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                </span>
+                                <span class="text-gray-400 text-sm font-mono">main.py</span>
+                            </div>
+                            <textarea id="editor-project4" class="code-editor w-full h-56 p-4 rounded-b-xl mb-4 border border-gray-200 focus:border-indigo-400"># SQLite数据库基础操作
 import sqlite3
 import os
 
@@ -369,59 +570,83 @@ for product, total in cursor.fetchall():
     print(f"{product}: {total}元")
 
 conn.close()</textarea>
-                        <div class="flex gap-4">
-                            <button onclick="runCode('project4')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="runCode('project4')" class="btn-green text-white px-5 py-2.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-play mr-2"></i>运行代码
                             </button>
-                            <button onclick="resetCode('project4')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            <button onclick="resetCode('project4')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl font-semibold flex items-center transition-all">
                                 <i class="fa fa-refresh mr-2"></i>重置
                             </button>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">输出：</h5>
-                            <pre id="output-project4" class="code-output p-4 rounded-lg min-h-[100px]"></pre>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h5 class="text-sm font-semibold text-gray-700 flex items-center">
+                                    <i class="fa fa-terminal mr-2 text-gray-500"></i>输出：
+                                </h5>
+                            </div>
+                            <pre id="output-project4" class="code-output p-5 rounded-xl min-h-[150px]"></pre>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="project-5" class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-6">
+            <div id="project-5" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 project-card card-hover">
+                <div class="grid md:grid-cols-2 gap-10 items-center mb-8">
                     <div>
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fa fa-robot text-pink-600 text-2xl"></i>
+                        <div class="flex items-center mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fa fa-robot text-white text-2xl"></i>
                             </div>
-                            <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium">LLM应用</span>
+                            <span class="bg-rose-50 text-rose-700 px-4 py-1.5 rounded-full text-sm font-semibold">LLM应用</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">LangChain本地知识库问答机器人</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">LangChain本地知识库问答机器人</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             读取本地Markdown文档，文本分块向量化，使用Chroma向量库存储，构建问答链，提供Streamlit简易交互界面。
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">LangChain</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Chroma</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">向量检索</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">RAG</span>
+                        <div class="flex flex-wrap gap-2.5 mb-6">
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">LangChain</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Chroma</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">向量检索</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">RAG</span>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="showPractice('project5')" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            <button onclick="showPractice('project5')" class="btn-gradient text-white px-7 py-3.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-flask mr-2"></i>开始练习
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-lg">
-                        <div class="text-center text-gray-500 py-12">
-                            <i class="fa fa-comments text-5xl mb-4 text-gray-300"></i>
-                            <p>项目可视化预览</p>
+                    <div class="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-6 flex items-center justify-center min-h-[200px]">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-xl shadow-md mb-4">
+                                <i class="fa fa-comments text-rose-500 text-3xl"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium">问答系统预览</p>
                         </div>
                     </div>
                 </div>
                 <div id="practice-project5" class="hidden practice-section">
-                    <div class="bg-white rounded-xl p-6 shadow-lg">
-                        <h4 class="text-xl font-bold mb-4">🎯 练习 5：简单问答系统</h4>
-                        <p class="text-gray-600 mb-4">实现一个基于关键词匹配的简单问答系统。</p>
-                        <textarea id="editor-project5" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># 简单问答系统
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-8 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 flex items-center">
+                                <span class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa fa-target text-white text-sm"></i>
+                                </span>
+                                练习 5：简单问答系统
+                            </h4>
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">进阶</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">实现一个基于关键词匹配的简单问答系统。</p>
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-t-xl border-b border-gray-700">
+                                <span class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                </span>
+                                <span class="text-gray-400 text-sm font-mono">main.py</span>
+                            </div>
+                            <textarea id="editor-project5" class="code-editor w-full h-56 p-4 rounded-b-xl mb-4 border border-gray-200 focus:border-indigo-400"># 简单问答系统
 knowledge_base = {
     '什么是Python': 'Python是一种高级编程语言，以其简洁的语法著称。',
     '什么是数据分析': '数据分析是指用适当的统计方法对收集来的大量数据进行分析。',
@@ -446,59 +671,83 @@ questions = [
 for q in questions:
     print(f"问：{q}")
     print(f"答：{ask_question(q)}\n")</textarea>
-                        <div class="flex gap-4">
-                            <button onclick="runCode('project5')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="runCode('project5')" class="btn-green text-white px-5 py-2.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-play mr-2"></i>运行代码
                             </button>
-                            <button onclick="resetCode('project5')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            <button onclick="resetCode('project5')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl font-semibold flex items-center transition-all">
                                 <i class="fa fa-refresh mr-2"></i>重置
                             </button>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">输出：</h5>
-                            <pre id="output-project5" class="code-output p-4 rounded-lg min-h-[100px]"></pre>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h5 class="text-sm font-semibold text-gray-700 flex items-center">
+                                    <i class="fa fa-terminal mr-2 text-gray-500"></i>输出：
+                                </h5>
+                            </div>
+                            <pre id="output-project5" class="code-output p-5 rounded-xl min-h-[150px]"></pre>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="project-6" class="bg-gradient-to-br from-cyan-50 to-sky-50 rounded-2xl p-8">
-                <div class="grid md:grid-cols-2 gap-8 items-center mb-6">
+            <div id="project-6" class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 project-card card-hover">
+                <div class="grid md:grid-cols-2 gap-10 items-center mb-8">
                     <div>
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center mr-4">
-                                <i class="fa fa-cloud text-cyan-600 text-2xl"></i>
+                        <div class="flex items-center mb-5">
+                            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-sky-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg">
+                                <i class="fa fa-cloud text-white text-2xl"></i>
                             </div>
-                            <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full text-sm font-medium">模型部署</span>
+                            <span class="bg-cyan-50 text-cyan-700 px-4 py-1.5 rounded-full text-sm font-semibold">模型部署</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-4">图像分类模型部署</h3>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">图像分类模型部署</h3>
                         <p class="text-gray-600 mb-6 leading-relaxed">
                             训练MNIST图像分类模型，使用FastAPI搭建预测接口，编写Dockerfile实现容器化部署，使用Streamlit作为前端调用接口。
                         </p>
-                        <div class="flex flex-wrap gap-2 mb-6">
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">FastAPI</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">Docker</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">TensorFlow</span>
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">MLOps</span>
+                        <div class="flex flex-wrap gap-2.5 mb-6">
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">FastAPI</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">Docker</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">TensorFlow</span>
+                            <span class="tag bg-gray-100 text-gray-700 px-3.5 py-1.5 rounded-full text-sm font-medium hover:bg-gray-200">MLOps</span>
                         </div>
                         <div class="flex space-x-4">
-                            <button onclick="showPractice('project6')" class="bg-cyan-600 hover:bg-cyan-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                            <button onclick="showPractice('project6')" class="btn-gradient text-white px-7 py-3.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-flask mr-2"></i>开始练习
                             </button>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl p-4 shadow-lg">
-                        <div class="text-center text-gray-500 py-12">
-                            <i class="fa fa-cubes text-5xl mb-4 text-gray-300"></i>
-                            <p>项目可视化预览</p>
+                    <div class="bg-gradient-to-br from-cyan-50 to-sky-50 rounded-2xl p-6 flex items-center justify-center min-h-[200px]">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-xl shadow-md mb-4">
+                                <i class="fa fa-cubes text-cyan-500 text-3xl"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium">模型部署预览</p>
                         </div>
                     </div>
                 </div>
                 <div id="practice-project6" class="hidden practice-section">
-                    <div class="bg-white rounded-xl p-6 shadow-lg">
-                        <h4 class="text-xl font-bold mb-4">🎯 练习 6：简单数字识别</h4>
-                        <p class="text-gray-600 mb-4">实现一个简单的数字识别模拟系统。</p>
-                        <textarea id="editor-project6" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># 简单数字识别模拟
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl p-8 border border-gray-100">
+                        <div class="flex items-center justify-between mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 flex items-center">
+                                <span class="w-8 h-8 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fa fa-target text-white text-sm"></i>
+                                </span>
+                                练习 6：简单数字识别
+                            </h4>
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-semibold">高级</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">实现一个简单的数字识别模拟系统。</p>
+                        <div class="relative">
+                            <div class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-t-xl border-b border-gray-700">
+                                <span class="flex items-center">
+                                    <span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                </span>
+                                <span class="text-gray-400 text-sm font-mono">main.py</span>
+                            </div>
+                            <textarea id="editor-project6" class="code-editor w-full h-56 p-4 rounded-b-xl mb-4 border border-gray-200 focus:border-indigo-400"># 简单数字识别模拟
 import random
 
 class SimpleClassifier:
@@ -532,17 +781,22 @@ for char in test_chars:
     print(f"输入: {char}")
     print(f"预测数字: {pred}")
     print(f"置信度: {conf:.2%}\n")</textarea>
-                        <div class="flex gap-4">
-                            <button onclick="runCode('project6')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="runCode('project6')" class="btn-green text-white px-5 py-2.5 rounded-xl font-semibold flex items-center">
                                 <i class="fa fa-play mr-2"></i>运行代码
                             </button>
-                            <button onclick="resetCode('project6')" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                            <button onclick="resetCode('project6')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2.5 rounded-xl font-semibold flex items-center transition-all">
                                 <i class="fa fa-refresh mr-2"></i>重置
                             </button>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="text-sm font-medium text-gray-700 mb-2">输出：</h5>
-                            <pre id="output-project6" class="code-output p-4 rounded-lg min-h-[100px]"></pre>
+                        <div class="mt-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h5 class="text-sm font-semibold text-gray-700 flex items-center">
+                                    <i class="fa fa-terminal mr-2 text-gray-500"></i>输出：
+                                </h5>
+                            </div>
+                            <pre id="output-project6" class="code-output p-5 rounded-xl min-h-[150px]"></pre>
                         </div>
                     </div>
                 </div>
@@ -550,20 +804,27 @@ for char in test_chars:
         </section>
     </main>
 
-    <footer class="bg-dark text-white py-12 px-4 sm:px-6 lg:px-8 mt-20">
+    <footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16 px-4 sm:px-6 lg:px-8 mt-20">
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <p class="text-gray-400">© 2024 吕仲豪. 保留所有权利。</p>
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <p class="text-gray-400 text-sm">© 2024 吕仲豪. 保留所有权利。</p>
+                    <p class="text-gray-500 text-xs mt-1">专注Python数据分析项目设计与教学</p>
                 </div>
-                <div class="flex space-x-6">
-                    <a href="https://github.com/jiahao-666671" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                <div class="flex space-x-8">
+                    <a href="https://github.com/jiahao-666671" target="_blank" class="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110">
                         <i class="fa fa-github text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                    <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110">
                         <i class="fa fa-envelope text-xl"></i>
                     </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 hover:scale-110">
+                        <i class="fa fa-linkedin text-xl"></i>
+                    </a>
                 </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p class="text-gray-500 text-sm">Made with <i class="fa fa-heart text-red-500"></i> for data enthusiasts</p>
             </div>
         </div>
     </footer>
