@@ -833,6 +833,8 @@ for char in test_chars:
     </footer>
 
     <script>
+        console.log('JavaScript loaded successfully');
+        
         const initialCodes = {
             project1: `# 创建数据
 data = {
@@ -1002,6 +1004,7 @@ for char in test_chars:
         };
 
         function showPractice(projectId) {
+            console.log('showPractice called with:', projectId);
             const practiceDiv = document.getElementById(`practice-${projectId}`);
             if (practiceDiv.classList.contains('hidden')) {
                 practiceDiv.classList.remove('hidden');
