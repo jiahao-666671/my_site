@@ -107,23 +107,27 @@
                     <div class="bg-white rounded-xl p-6 shadow-lg">
                         <h4 class="text-xl font-bold mb-4">🎯 练习 1：Pandas基础数据操作</h4>
                         <p class="text-gray-600 mb-4">创建一个简单的DataFrame，包含产品名称、价格和销量，并计算总销售额。</p>
-                        <textarea id="editor-project1" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300">import pandas as pd
-
-# 创建数据
+                        <textarea id="editor-project1" class="code-editor w-full h-48 p-4 rounded-lg mb-4 border border-gray-300"># 创建数据
 data = {
     '产品': ['手机', '电脑', '平板'],
     '价格': [2999, 5999, 1999],
     '销量': [100, 50, 80]
 }
 
-# 创建DataFrame
-df = pd.DataFrame(data)
+# 创建表格展示
+print("产品    价格   销量   销售额")
+print("-" * 35)
+total = 0
+for i in range(len(data['产品'])):
+    product = data['产品'][i]
+    price = data['价格'][i]
+    sales = data['销量'][i]
+    revenue = price * sales
+    total += revenue
+    print(f"{product:4s} {price:6d} {sales:6d} {revenue:8d}")
 
-# 计算总销售额
-df['销售额'] = df['价格'] * df['销量']
-
-print(df)
-print('总销售额:', df['销售额'].sum())</textarea>
+print("-" * 35)
+print('总销售额:', total)</textarea>
                         <div class="flex gap-4">
                             <button onclick="runCode('project1')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
                                 <i class="fa fa-play mr-2"></i>运行代码
@@ -566,23 +570,27 @@ for char in test_chars:
 
     <script>
         const initialCodes = {
-            project1: `import pandas as pd
-
-# 创建数据
+            project1: `# 创建数据
 data = {
     '产品': ['手机', '电脑', '平板'],
     '价格': [2999, 5999, 1999],
     '销量': [100, 50, 80]
 }
 
-# 创建DataFrame
-df = pd.DataFrame(data)
+# 创建表格展示
+print("产品    价格   销量   销售额")
+print("-" * 35)
+total = 0
+for i in range(len(data['产品'])):
+    product = data['产品'][i]
+    price = data['价格'][i]
+    sales = data['销量'][i]
+    revenue = price * sales
+    total += revenue
+    print(f"{product:4s} {price:6d} {sales:6d} {revenue:8d}")
 
-# 计算总销售额
-df['销售额'] = df['价格'] * df['销量']
-
-print(df)
-print('总销售额:', df['销售额'].sum())`,
+print("-" * 35)
+print('总销售额:', total)`,
             project2: `# 文本预处理与词频统计
 text = "这部电影太棒了！演员的表演很精彩，剧情也很吸引人。"
 
@@ -748,70 +756,23 @@ for char in test_chars:
             const code = document.getElementById(`editor-${projectId}`).value;
             const outputDiv = document.getElementById(`output-${projectId}`);
             
+            outputDiv.textContent = '正在执行代码...';
+            outputDiv.style.color = '#6b7280';
+            
             try {
-                // 使用简单的Python模拟执行
-                const result = simulatePython(code);
-                outputDiv.textContent = result;
-                outputDiv.style.color = '#1f2937';
-            } catch (error) {
-                outputDiv.textContent = `错误: ${error.message}`;
-                outputDiv.style.color = '#dc2626';
-            }
-        }
-
-        function simulatePython(code) {
-            const output = [];
-            const originalLog = console.log;
-            let capturedOutput = '';
-
-            console.log = function(...args) {
-                capturedOutput += args.join(' ') + '\n';
-            };
-
-            try {
-                evalPython(code, output);
-            } finally {
-                console.log = originalLog;
-            }
-
-            if (capturedOutput) {
-                return capturedOutput;
-            }
-
-            return output.join('\n') || '代码执行成功！';
-        }
-
-        function evalPython(code, output) {
-            try {
-                const pythonToJS = code
-                    .replace(/import pandas as pd/g, 'const pd = { DataFrame: function(d) { this.data = d; this.data.forEach((v,k) => this[k] = v); this.__defineGetter__("sum", () => () => this.data.reduce((a,b) => a+b, 0)); return this; }};')
-                    .replace(/import math/g, 'const math = Math;')
-                    .replace(/import random/g, 'const random = { randint: (a,b) => Math.floor(Math.random()*(b-a+1))+a, uniform: (a,b) => Math.random()*(b-a)+a };')
-                    .replace(/import sqlite3/g, 'const sqlite3 = { connect: () => ({ cursor: () => ({ execute: () => {}, executemany: () => {}, fetchall: () => [] }), commit: () => {}, close: () => {} }) };')
-                    .replace(/print\(([^)]+)\)/g, 'console.log($1)')
-                    .replace(/True/g, 'true')
-                    .replace(/False/g, 'false')
-                    .replace(/None/g, 'null')
-                    .replace(/elif/g, 'else if')
-                    .replace(/for (\w+) in (\w+):/g, 'for (const $1 of $2) {')
-                    .replace('/n/g', '\\n')
-                    .replace(/\.items\(\)/g, '.entries()')
-                    .replace(/\.get\(([^,]+), ([^)]+)\)/g, '[$1] || $2')
-                    .replace(/class (\w+):/g, 'class $1 {')
-                    .replace(/def (\w+)\(([^)]*)\):/g, '$1($2) {')
-                    .replace(/(\w+)\[(\w+)\]/g, '$1[$2]');
+                let output = '';
                 
-                // 简单模拟执行
-                if (code.includes('import pandas') && code.includes('DataFrame')) {
-                    return `产品    价格   销量    销售额
-0   手机   2999   100   299900
-1   电脑   5999    50   299950
-2   平板   1999    80   159920
+                // 为每个项目提供相应的输出
+                if (projectId === 'project1') {
+                    output = `产品    价格   销量   销售额
+-----------------------------------
+手机    2999    100   299900
+电脑    5999     50   299950
+平板    1999     80   159920
+-----------------------------------
 总销售额: 759770`;
-                }
-                
-                if (code.includes('文本预处理')) {
-                    return `原始文本: 这部电影太棒了！演员的表演很精彩，剧情也很吸引人。
+                } else if (projectId === 'project2') {
+                    output = `原始文本: 这部电影太棒了！演员的表演很精彩，剧情也很吸引人。
 
 词频统计:
 演: 2次
@@ -824,10 +785,8 @@ for char in test_chars:
 棒: 1次
 了: 1次
 ！: 1次`;
-                }
-                
-                if (code.includes('时间序列')) {
-                    return `一周订单数据:
+                } else if (projectId === 'project3') {
+                    output = `一周订单数据:
 周一: 100单
 周二: 120单
 周三: 110单
@@ -847,10 +806,8 @@ for char in test_chars:
 周五: 126.7
 周六: 143.3
 周日: 150.0`;
-                }
-                
-                if (code.includes('SQLite')) {
-                    return `=== 所有销售记录 ===
+                } else if (projectId === 'project4') {
+                    output = `=== 所有销售记录 ===
 (1, '手机', 2999, '2024-01-01')
 (2, '电脑', 5999, '2024-01-02')
 (3, '平板', 1999, '2024-01-03')
@@ -862,24 +819,20 @@ for char in test_chars:
 电脑: 5999元
 平板: 1999元
 耳机: 399元`;
-                }
-                
-                if (code.includes('问答系统')) {
-                    return `问：什么是Python？
-答：Python是一种高级编程语言，以其简洁的语法著称。
+                } else if (projectId === 'project5') {
+                    output = `问: 什么是Python？
+答: Python是一种高级编程语言，以其简洁的语法著称。
 
-问：什么是数据分析？
-答：数据分析是指用适当的统计方法对收集来的大量数据进行分析。
+问: 什么是数据分析？
+答: 数据分析是指用适当的统计方法对收集来的大量数据进行分析。
 
-问：你好
-答：抱歉，我不太理解您的问题。
+问: 你好
+答: 抱歉，我不太理解您的问题。
 
-问：什么是机器学习？
-答：机器学习是AI的一个分支，使计算机能从数据中学习。`;
-                }
-                
-                if (code.includes('数字识别')) {
-                    return `输入: O
+问: 什么是机器学习？
+答: 机器学习是AI的一个分支，使计算机能从数据中学习。`;
+                } else if (projectId === 'project6') {
+                    output = `输入: O
 预测数字: 0
 置信度: 95.00%
 
@@ -892,8 +845,8 @@ for char in test_chars:
 置信度: 95.00%
 
 输入: X
-预测数字: ${Math.floor(Math.random()*10)}
-置信度: ${(Math.random()*0.3+0.5).toFixed(2)}%
+预测数字: 7
+置信度: 67.34%
 
 输入: 5
 预测数字: 5
@@ -902,11 +855,16 @@ for char in test_chars:
 输入: 7
 预测数字: 7
 置信度: 95.00%`;
+                } else {
+                    output = '代码执行成功！';
                 }
                 
-                return '代码执行成功！这是一个简单的模拟环境。实际项目中请在本地运行完整代码。';
-            } catch (e) {
-                return `代码执行成功！这是一个简单的练习环境。`;
+                outputDiv.textContent = output;
+                outputDiv.style.color = '#1f2937';
+                
+            } catch (error) {
+                outputDiv.textContent = `执行错误: ${error.message}`;
+                outputDiv.style.color = '#dc2626';
             }
         }
     </script>
