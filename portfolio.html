@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吕仲豪 · Python数据分析项目设计</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 配置Tailwind自定义颜色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6', // 蓝色作为强调色
+                        dark: '#1f2937',
+                        light: '#f3f4f6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-sm {
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-dark">
+    <!-- 导航栏 -->
+    <header class="py-6 px-4 sm:px-6 lg:px-8 border-b border-gray-200">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-dark">
+                <span class="text-primary">吕仲豪</span> · Python数据分析项目设计
+            </h1>
+            <!-- 导航菜单 -->
+            <nav class="hidden md:flex space-x-8">
+                <a href="portfolio.html" class="text-gray-600 hover:text-primary transition-colors">首页</a>
+                <a href="projects.html" class="text-gray-600 hover:text-primary transition-colors">项目展示</a>
+                <a href="#about" class="text-gray-600 hover:text-primary transition-colors">关于</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- 简介区域 -->
+        <section class="text-center mb-16">
+            <div class="mb-8">
+                <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20portrait%20of%20handsome%20asian%20man%20like%20Daniel%20Wu,%20wearing%20business%20casual%20clothing,%20neutral%20background,%20high%20quality&image_size=square_hd" 
+                     alt="吕仲豪头像" 
+                     class="w-40 h-40 rounded-full mx-auto object-cover border-4 border-primary shadow-lg">
+            </div>
+            <h2 class="text-3xl font-bold mb-4">专注AI时代的数据分析教学与项目设计</h2>
+            <p class="text-gray-600 text-lg">10个实战项目，从清洗到部署</p>
+        </section>
+
+        <!-- 项目分类卡片区域 -->
+        <section id="projects" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-8 text-center">项目分类</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 项目卡片 1 -->
+                <a href="projects.html#project-1" class="block bg-white border border-gray-200 rounded-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-bar-chart"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">数据清洗与可视化</h4>
+                    <p class="text-gray-600">电商用户行为数据分析，使用Pandas、Matplotlib等工具</p>
+                    <div class="mt-4 text-primary font-medium">
+                        查看详情 →
+                    </div>
+                </a>
+
+                <!-- 项目卡片 2 -->
+                <a href="projects.html#project-2" class="block bg-white border border-gray-200 rounded-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-brain"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">机器学习与NLP</h4>
+                    <p class="text-gray-600">影评情感分析，使用Scikit-learn进行建模</p>
+                    <div class="mt-4 text-primary font-medium">
+                        查看详情 →
+                    </div>
+                </a>
+
+                <!-- 项目卡片 3 -->
+                <a href="projects.html#project-3" class="block bg-white border border-gray-200 rounded-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">时间序列与预测</h4>
+                    <p class="text-gray-600">共享单车订单预测，使用ARIMA模型</p>
+                    <div class="mt-4 text-primary font-medium">
+                        查看详情 →
+                    </div>
+                </a>
+
+                <!-- 项目卡片 4 -->
+                <a href="projects.html#project-4" class="block bg-white border border-gray-200 rounded-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-database"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">数据库与仪表板</h4>
+                    <p class="text-gray-600">销售数据仪表板，使用Streamlit+SQLite</p>
+                    <div class="mt-4 text-primary font-medium">
+                        查看详情 →
+                    </div>
+                </a>
+
+                <!-- 项目卡片 5 -->
+                <a href="projects.html#project-5" class="block bg-white border border-gray-200 rounded-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-robot"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">LLM应用开发</h4>
+                    <p class="text-gray-600">本地知识库问答机器人，使用LangChain+Chroma</p>
+                    <div class="mt-4 text-primary font-medium">
+                        查看详情 →
+                    </div>
+                </a>
+
+                <!-- 项目卡片 6 -->
+                <a href="projects.html#project-6" class="block bg-white border border-gray-200 rounded-lg p-6 card-hover">
+                    <div class="text-primary text-3xl mb-4">
+                        <i class="fa fa-cloud"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-2">模型部署实战</h4>
+                    <p class="text-gray-600">图像分类模型部署，使用FastAPI+Docker</p>
+                    <div class="mt-4 text-primary font-medium">
+                        查看详情 →
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 关于区域 -->
+        <section id="about" class="mb-16">
+            <h3 class="text-2xl font-semibold mb-6 text-center">关于我的项目设计理念</h3>
+            <div class="bg-light rounded-lg p-8">
+                <p class="text-gray-700 leading-relaxed">
+                    通过10个由浅入深的项目，帮助学习者掌握Python数据处理、分析、可视化、建模及AI应用部署的全流程。每个项目都注重实战性和实用性，从真实业务场景出发，让学习者在实践中掌握数据分析的核心技能。
+                </p>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    我相信，最好的学习方式是通过实际项目来积累经验。因此，我的项目设计注重从问题出发，引导学习者思考如何使用Python工具解决实际数据问题，培养数据思维和分析能力。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer id="contact" class="bg-dark text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <p class="text-gray-400">© 2024 吕仲豪. 保留所有权利。</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-envelope text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fa fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 简单的JavaScript，用于未来扩展 -->
+    <script>
+        // 未来可添加交互功能
+        console.log('Python数据分析项目设计主页加载完成');
+    </script>
+</body>
+</html>
+
+<!-- 修改说明：
+1. 名字修改：将页面中的 [Your Name] 替换为您的真实姓名
+2. 简介修改：修改简介区域的文本内容，以符合您的个人情况
+3. 项目链接：将卡片中的 href="#" 替换为真实的项目页面链接，如 project-1.html
+4. 联系方式：将页脚中的社交媒体链接替换为您的真实账号
+5. 扩展内容：可以在现有结构基础上添加更多项目卡片或内容区域
+-->
