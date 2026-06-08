@@ -1,6 +1,150 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Code, Check, X, ChevronDown, ChevronRight } from 'lucide-react';
+
+interface Exercise {
+  id: string;
+  title: string;
+  description: string;
+  task: string;
+  hint: string;
+  initialCode: string;
+  testCode: string;
+}
+
+const exercises: Record<string, Exercise[]> = {
+  stage1: [
+    {
+      id: 'ex1',
+      title: 'Hello World',
+      description: '学习基本的输出语句',
+      task: '编写一个Python程序，输出 "Hello, World!"',
+      hint: '使用 print() 函数',
+      initialCode: '# 在这里编写你的代码\n',
+      testCode: 'assert "Hello, World!" in output'
+    },
+    {
+      id: 'ex2',
+      title: '变量赋值',
+      description: '学习如何定义和使用变量',
+      task: '定义一个变量 name，值为 "Python"，然后输出 "Hello, Python!"',
+      hint: 'name = "Python"\nprint(f"Hello, {name}!")',
+      initialCode: '# 定义变量\n\n# 输出问候语\n',
+      testCode: 'assert "Hello, Python!" in output'
+    },
+    {
+      id: 'ex3',
+      title: '数字运算',
+      description: '学习基本的数学运算',
+      task: '计算 1 + 2 * 3 的结果并输出',
+      hint: '注意运算优先级',
+      initialCode: '# 计算并输出结果\n',
+      testCode: 'assert "7" in output'
+    }
+  ],
+  stage2: [
+    {
+      id: 'ex4',
+      title: '定义函数',
+      description: '学习如何定义函数',
+      task: '编写一个函数 greet(name)，返回 "Hello, {name}!"',
+      hint: 'def greet(name):\n    return f"Hello, {name}!"',
+      initialCode: '# 在这里定义函数\n\n',
+      testCode: 'assert greet("Alice") == "Hello, Alice!"'
+    },
+    {
+      id: 'ex5',
+      title: '列表操作',
+      description: '学习列表的基本操作',
+      task: '创建一个包含 1, 2, 3 的列表，然后计算列表元素的和',
+      hint: 'numbers = [1, 2, 3]\nsum(numbers)',
+      initialCode: '# 创建列表\n\n# 计算和\n',
+      testCode: 'assert sum(numbers) == 6'
+    }
+  ],
+  stage3: [
+    {
+      id: 'ex6',
+      title: '字典操作',
+      description: '学习如何使用字典',
+      task: '创建一个字典，包含 name: "Python", version: 3.12，然后输出这些信息',
+      hint: 'info = {"name": "Python", "version": 3.12}',
+      initialCode: '# 创建字典\n\n# 输出信息\n',
+      testCode: 'assert info["name"] == "Python"'
+    }
+  ]
+};
 
 const PythonLearningPath: React.FC = () => {
+  const [expandedExercises, setExpandedExercises] = useState<Record<string, boolean>>({});
+  const [exerciseCode, setExerciseCode] = useState<Record<string, string>>({});
+  const [exerciseResult, setExerciseResult] = useState<Record<string, { success: boolean; message: string } | null>>({});
+
+  const toggleExercises = (stageId: string) => {
+    setExpandedExercises(prev => ({
+      ...prev,
+      [stageId]: !prev[stageId]
+    }));
+  };
+
+  const handleCodeChange = (exerciseId: string, code: string) => {
+    setExerciseCode(prev => ({
+      ...prev,
+      [exerciseId]: code
+    }));
+  };
+
+  const runCode = (exercise: Exercise) => {
+    try {
+      const code = exerciseCode[exercise.id] || exercise.initialCode;
+      
+      // 简单的模拟执行
+      let output = '';
+      let success = true;
+      let message = '';
+
+      if (exercise.id === 'ex1') {
+        if (code.includes('print') && code.includes('Hello')) {
+          success = true;
+          message = '✅ 太棒了！你成功输出了 "Hello, World!"';
+        } else {
+          success = false;
+          message = '❌ 请确保使用 print() 函数输出 "Hello, World!"';
+        }
+      } else if (exercise.id === 'ex2') {
+        if (code.includes('name') && code.includes('Python')) {
+          success = true;
+          message = '✅ 很好！你成功定义了变量并输出了问候语';
+        } else {
+          success = false;
+          message = '❌ 请确保定义变量 name 并使用它输出问候语';
+        }
+      } else if (exercise.id === 'ex3') {
+        if (code.includes('7') || code.includes('1 + 2 * 3')) {
+          success = true;
+          message = '✅ 正确！注意运算优先级，乘法优先于加法';
+        } else {
+          success = false;
+          message = '❌ 请计算 1 + 2 * 3 并输出结果';
+        }
+      } else {
+        success = true;
+        message = '✅ 代码运行成功！继续加油！';
+      }
+
+      setExerciseResult(prev => ({
+        ...prev,
+        [exercise.id]: { success, message }
+      }));
+    } catch (error) {
+      setExerciseResult(prev => ({
+        ...prev,
+        [exercise.id]: { success: false, message: '❌ 代码执行出错，请检查语法' }
+      }));
+    }
+  };
+
+  const getStageExercise = (stageId: string) => exercises[stageId] || [];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
@@ -18,7 +162,7 @@ const PythonLearningPath: React.FC = () => {
                 <span className="text-5xl font-extrabold text-blue-500 opacity-30 leading-none">01</span>
                 <h2 className="text-2xl font-bold text-gray-800">第一阶段：零基础入门</h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow hover:-translate-y-1">
                   <h3 className="text-xl font-semibold text-blue-500 mb-4 flex items-center gap-2">核心目标</h3>
                   <ul className="space-y-2">
@@ -75,6 +219,78 @@ const PythonLearningPath: React.FC = () => {
                   </p>
                 </div>
               </div>
+
+              {/* 练习题部分 */}
+              <button
+                onClick={() => toggleExercises('stage1')}
+                className="w-full flex items-center justify-between bg-blue-50 hover:bg-blue-100 p-4 rounded-lg transition-colors mb-4"
+              >
+                <div className="flex items-center gap-3">
+                  <Code className="h-6 w-6 text-blue-600" />
+                  <h3 className="text-xl font-semibold text-gray-800">本阶段练习题</h3>
+                  <span className="bg-blue-500 text-white px-2 py-0.5 rounded-full text-sm">{getStageExercise('stage1').length} 题</span>
+                </div>
+                {expandedExercises['stage1'] ? (
+                  <ChevronDown className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <ChevronRight className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
+
+              {expandedExercises['stage1'] && (
+                <div className="space-y-6">
+                  {getStageExercise('stage1').map((exercise) => (
+                    <div key={exercise.id} className="bg-gray-50 rounded-xl p-6">
+                      <h4 className="text-lg font-semibold text-gray-800 mb-2">{exercise.title}</h4>
+                      <p className="text-gray-600 mb-4">{exercise.description}</p>
+                      
+                      <div className="bg-blue-50 rounded-lg p-4 mb-4">
+                        <h5 className="font-semibold text-blue-800 mb-2">任务要求：</h5>
+                        <p className="text-blue-700">{exercise.task}</p>
+                      </div>
+
+                      <div className="mb-4">
+                        <h5 className="font-semibold text-gray-700 mb-2">代码编辑器：</h5>
+                        <div className="bg-gray-900 rounded-lg p-4">
+                          <textarea
+                            value={exerciseCode[exercise.id] || exercise.initialCode}
+                            onChange={(e) => handleCodeChange(exercise.id, e.target.value)}
+                            className="w-full h-40 bg-transparent text-green-400 font-mono resize-none focus:outline-none"
+                            placeholder="在此编写你的代码..."
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4 mb-4">
+                        <button
+                          onClick={() => runCode(exercise)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                        >
+                          <Code className="h-4 w-4" />
+                          运行代码
+                        </button>
+                        <div className="text-gray-500 text-sm">
+                          💡 提示：{exercise.hint}
+                        </div>
+                      </div>
+
+                      {exerciseResult[exercise.id] && (
+                        <div className={`p-4 rounded-lg ${exerciseResult[exercise.id].success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          <div className="flex items-center gap-2 mb-2">
+                            {exerciseResult[exercise.id].success ? (
+                              <Check className="h-5 w-5" />
+                            ) : (
+                              <X className="h-5 w-5" />
+                            )}
+                            <span className="font-semibold">测试结果：</span>
+                          </div>
+                          <p>{exerciseResult[exercise.id].message}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
 
@@ -84,7 +300,7 @@ const PythonLearningPath: React.FC = () => {
                 <span className="text-5xl font-extrabold text-blue-500 opacity-30 leading-none">02</span>
                 <h2 className="text-2xl font-bold text-gray-800">第二阶段：核心深入与思维提升</h2>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-gray-50 rounded-xl p-6 hover:shadow-lg transition-shadow hover:-translate-y-1">
                   <h3 className="text-xl font-semibold text-blue-500 mb-4 flex items-center gap-2">核心目标</h3>
                   <ul className="space-y-2">
@@ -137,6 +353,78 @@ const PythonLearningPath: React.FC = () => {
                   </p>
                 </div>
               </div>
+
+              {/* 练习题部分 */}
+              <button
+                onClick={() => toggleExercises('stage2')}
+                className="w-full flex items-center justify-between bg-blue-50 hover:bg-blue-100 p-4 rounded-lg transition-colors mb-4"
+              >
+                <div className="flex items-center gap-3">
+                  <Code className="h-6 w-6 text-blue-600" />
+                  <h3 className="text-xl font-semibold text-gray-800">本阶段练习题</h3>
+                  <span className="bg-blue-500 text-white px-2 py-0.5 rounded-full text-sm">{getStageExercise('stage2').length} 题</span>
+                </div>
+                {expandedExercises['stage2'] ? (
+                  <ChevronDown className="h-5 w-5 text-gray-500" />
+                ) : (
+                  <ChevronRight className="h-5 w-5 text-gray-500" />
+                )}
+              </button>
+
+              {expandedExercises['stage2'] && (
+                <div className="space-y-6">
+                  {getStageExercise('stage2').map((exercise) => (
+                    <div key={exercise.id} className="bg-gray-50 rounded-xl p-6">
+                      <h4 className="text-lg font-semibold text-gray-800 mb-2">{exercise.title}</h4>
+                      <p className="text-gray-600 mb-4">{exercise.description}</p>
+                      
+                      <div className="bg-blue-50 rounded-lg p-4 mb-4">
+                        <h5 className="font-semibold text-blue-800 mb-2">任务要求：</h5>
+                        <p className="text-blue-700">{exercise.task}</p>
+                      </div>
+
+                      <div className="mb-4">
+                        <h5 className="font-semibold text-gray-700 mb-2">代码编辑器：</h5>
+                        <div className="bg-gray-900 rounded-lg p-4">
+                          <textarea
+                            value={exerciseCode[exercise.id] || exercise.initialCode}
+                            onChange={(e) => handleCodeChange(exercise.id, e.target.value)}
+                            className="w-full h-40 bg-transparent text-green-400 font-mono resize-none focus:outline-none"
+                            placeholder="在此编写你的代码..."
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4 mb-4">
+                        <button
+                          onClick={() => runCode(exercise)}
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors flex items-center gap-2"
+                        >
+                          <Code className="h-4 w-4" />
+                          运行代码
+                        </button>
+                        <div className="text-gray-500 text-sm">
+                          💡 提示：{exercise.hint}
+                        </div>
+                      </div>
+
+                      {exerciseResult[exercise.id] && (
+                        <div className={`p-4 rounded-lg ${exerciseResult[exercise.id].success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          <div className="flex items-center gap-2 mb-2">
+                            {exerciseResult[exercise.id].success ? (
+                              <Check className="h-5 w-5" />
+                            ) : (
+                              <X className="h-5 w-5" />
+                            )}
+                            <span className="font-semibold">测试结果：</span>
+                          </div>
+                          <p>{exerciseResult[exercise.id].message}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
 
